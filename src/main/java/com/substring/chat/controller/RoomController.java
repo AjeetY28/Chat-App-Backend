@@ -2,6 +2,8 @@ package com.substring.chat.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,5 +44,15 @@ public class RoomController {
 
 
     //get rooom
-   
+    @GetMapping("/{roomId}")
+    public ResponseEntity<?> joinRoom(@PathVariable String roomId)
+    {
+        Room room=roomRepository.findByRoomId(roomId);
+        if(room==null)
+        {
+            return ResponseEntity.badRequest().body("Room not found");
+        }
+        return ResponseEntity.ok(room);
+    }
+
 }
